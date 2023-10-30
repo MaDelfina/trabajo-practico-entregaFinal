@@ -46,25 +46,25 @@ def ingresar_como_alumno():
                             print("Número de curso no válido. Ingresa un número entre 1 y", len(mis_cursos))
 
                     elif opcionAlumno == "2":
-                        if not estudiante.mis_cursos:
-                            print("No estás matriculado en ningún curso.")
-                        else:
+                        if len(estudiante.mis_cursos) > 0:
                             print("Cursos en los que estás matriculado:")
                             for i, curso in enumerate(estudiante.mis_cursos, 1):
                                 print(f"{i} - {curso.nombre}")
 
-                        curso_a_desmatricular = int(input("Ingresa el número del curso al que deseas desmatricularte: "))
+                            curso_a_desmatricular = int(input("Ingresa el número del curso al que deseas desmatricularte: "))
 
-                        if 1 <= curso_a_desmatricular <= len(estudiante.mis_cursos):
-                            curso_seleccionado = estudiante.mis_cursos[curso_a_desmatricular - 1]
+                            if 1 <= curso_a_desmatricular <= len(estudiante.mis_cursos):
+                                curso_seleccionado = estudiante.mis_cursos[curso_a_desmatricular - 1]
 
-                            if curso_seleccionado in estudiante.mis_cursos:
-                                estudiante.desmatricular_curso(curso_seleccionado)
-                                print(f"Te has desmatriculado del curso: Nombre: {curso_seleccionado.nombre}")
+                                if curso_seleccionado in estudiante.mis_cursos:
+                                    estudiante.desmatricular_curso(curso_seleccionado)
+                                    print(f"Te has desmatriculado del curso: Nombre: {curso_seleccionado.nombre}")
+                                else:
+                                    print("No estás matriculado en este curso.")
                             else:
-                                print("No estás matriculado en este curso.")
+                                print("Número de curso no válido.")
                         else:
-                            print("Número de curso no válido. Ingresa un número entre 1 y", len(estudiante.mis_cursos))
+                            print("No estás matriculado en ningún curso.")
 
                     elif opcionAlumno == "3":
                         if not estudiante.mis_cursos:
@@ -143,7 +143,7 @@ def ingresar_como_profesor():
 
                             curso_seleccionado = input("Ingresa el número del curso que deseas ver: ")
 
-                            if curso_seleccionado.isdigit():
+                            if curso_seleccionado.isdigit(): #verificar si una cadena de caracteres (string) contiene únicamente dígitos numéricos.
                                 curso_seleccionado = int(curso_seleccionado)
                                 if 1 <= curso_seleccionado <= len(profesor.mis_cursos):
                                     curso = profesor.mis_cursos[curso_seleccionado - 1]
@@ -181,6 +181,7 @@ def ingresar_como_profesor():
     
 def ver_cursos():
     print("Cursos disponibles:")
-    for curso in mis_cursos:
-        for carrera in [estudiante1]:
-            return f"Nombre del curso: {curso.nombre} - Carrera: {carrera.nombre}"
+    cursos_ordenados = [curso.nombre for curso in mis_cursos]
+    cursos_ordenados.sort()
+    for curso in cursos_ordenados:
+        print(f"Nombre del curso: {curso}")
